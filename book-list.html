@@ -1,6 +1,10 @@
 <!doctype html>
 <html> 
 	<head>
+		<meta charset="UTF-8">
+    		<meta name="viewport" content="width=device-width, initial-scale=0.5">	
+    		<title>Book List</title>    		
+
 		<style>
 
 			body {
@@ -79,38 +83,133 @@
   				{ title: 'The Odyssey', author: 'Homer' },
   				{ title: 'Alice\'s Adventures in Wonderland', author: 'Lewis Carroll' },
   				{ title: 'The Picture of Dorian Gray', author: 'Oscar Wilde' },
-  				{ title: 'The Grapes of Wrath', author: 'John Steinbeck' }
+  				{ title: 'The Grapes of Wrath', author: 'John Steinbeck' },
+				{ title: 'The Chronicles of Narnia: The Lion, the Witch and the Wardrobe', author: 'C.S. Lewis' },
+  				{ title: 'The Adventures of Huckleberry Finn', author: 'Mark Twain' },
+  				{ title: 'The Little Prince', author: 'Antoine de Saint-Exupéry' },
+  				{ title: 'Don Quixote', author: 'Miguel de Cervantes' },
+  				{ title: 'The Alchemist', author: 'Paulo Coelho' },
+  				{ title: 'The Scarlet Letter', author: 'Nathaniel Hawthorne' },
+  				{ title: 'Les Misérables', author: 'Victor Hugo' },
+  				{ title: 'The Count of Monte Cristo', author: 'Alexandre Dumas' },
+  				{ title: 'Fahrenheit 451', author: 'Ray Bradbury' },
+  				{ title: 'The Divine Comedy', author: 'Dante Alighieri' },
+  				{ title: 'The Picture of Dorian Gray', author: 'Oscar Wilde' },
+  				{ title: 'Moby-Dick', author: 'Herman Melville' },
+  				{ title: 'Wuthering Heights', author: 'Emily Brontë' },
+  				{ title: 'Dracula', author: 'Bram Stoker' },
+  				{ title: 'The Iliad', author: 'Homer' },
+  				{ title: 'The Stranger', author: 'Albert Camus' },
+  				{ title: 'The Metamorphosis', author: 'Franz Kafka' },
+  				{ title: 'Lord of the Flies', author: 'William Golding' },
+  				{ title: 'A Tale of Two Cities', author: 'Charles Dickens' },
+  				{ title: 'Great Expectations', author: 'Charles Dickens' },
+				{ title: 'The Ego and Its Own', author: 'Max Stirner' },
+    				{ title: 'The Communist Manifesto', author: 'Karl Marx' },
+    				{ title: 'The Condition of the Working Class in England', author: 'Friedrich Engels' },
+    				{ title: 'Meditations', author: 'Marcus Aurelius' },
+    				{ title: 'The Art of War', author: 'Sun Tzu' },
+    				{ title: 'Discourses and Selected Writings', author: 'Epictetus' },
+    				{ title: 'Letters from a Stoic', author: 'Seneca' },
+    				{ title: 'The Prince', author: 'Niccolò Machiavelli' },
+    				{ title: 'Thus Spoke Zarathustra', author: 'Friedrich Nietzsche' },
+    				{ title: 'The Communist Hypothesis', author: 'Alain Badiou' },
+				{ title: 'The Society of the Spectacle', author: 'Guy Debord' },
+    				{ title: 'The German Ideology', author: 'Karl Marx and Friedrich Engels' },
+    				{ title: 'Fear and Trembling', author: 'Søren Kierkegaard' },
+    				{ title: 'The Will to Power', author: 'Friedrich Nietzsche' },
+    				{ title: 'The Social Contract', author: 'Jean-Jacques Rousseau' },
+    				{ title: 'The Birth of Tragedy', author: 'Friedrich Nietzsche' },
+    				{ title: 'The Critique of Pure Reason', author: 'Immanuel Kant' },
+    				{ title: 'The Age of Reason', author: 'Thomas Paine' },
+    				{ title: 'The Art of Loving', author: 'Erich Fromm' },
+    				{ title: 'The Gay Science', author: 'Friedrich Nietzsche' },
+    				{ title: 'The Essential Writings of Machiavelli', author: 'Niccolò Machiavelli' },
+    				{ title: 'The Protestant Ethic and the Spirit of Capitalism', author: 'Max Weber' },
+    				{ title: 'The Birth of Biopolitics', author: 'Michel Foucault' },
+    				{ title: 'The Interpretation of Dreams', author: 'Sigmund Freud' },
+    				{ title: 'The Logic of Scientific Discovery', author: 'Karl Popper' },
+    				{ title: 'The Prince and Other Writings', author: 'Niccolò Machiavelli' },
+    				{ title: 'The Second Sex', author: 'Simone de Beauvoir' },
+    				{ title: 'The Art of War', author: 'Sun Tzu' },
+    				{ title: 'The Concept of the Political', author: 'Carl Schmitt' },
+    				{ title: 'The Phenomenology of Spirit', author: 'Georg Wilhelm Friedrich Hegel' }
 		];
 
 		let bookList = document.getElementById("list");
+		const booksPerPage = 10;
+		let currentPage = 0;
 
-		for (let i = 0; i < books.length; i++) {
-			let book = document.createElement("div");
-			book.setAttribute("id", "book");
-			bookList.appendChild(book);
+		//function to render batch of books
+	        const renderBooks = (startIndex, endIndex) => {
+			for (let i = startIndex; i < endIndex; i++) {
+				let book = document.createElement("div");
+				book.setAttribute("id", "book");
+				bookList.appendChild(book);
 			
-			let title = document.createElement("h1");
-			title.innerText = "Title: " + books[i].title;
-			title.setAttribute("id", "title");
-			book.appendChild(title);
+				let title = document.createElement("h1");
+				title.innerText = "Title: " + books[i].title;
+				title.setAttribute("id", "title");
+				book.appendChild(title);
 
-			let author = document.createElement("h2");
-			author.innerText = "Author: " + books[i].author;
-			author.setAttribute("id", "author");
-			book.appendChild(author);
-			author.style.display = "none";
+				let author = document.createElement("h2");
+				author.innerText = "Author: " + books[i].author;
+				author.setAttribute("id", "author");
+				book.appendChild(author);
+				author.style.display = "none";
 
-			let toggle = document.createElement("button");
-			toggle.innerText = "Display Author";
-			toggle.setAttribute("id", "toggle");
-			toggle.addEventListener("click", () => {
-				if (author.style.display == "none") {
-					author.style.display = "block";
-				} else {
-					author.style.display = "none";
+				let toggle = document.createElement("button");
+				toggle.innerText = "Display Author";
+				toggle.setAttribute("id", "toggle");
+				toggle.addEventListener("click", () => {
+					if (author.style.display == "none") {
+						author.style.display = "block";
+					} else {
+						author.style.display = "none";
+					}
+				});
+				book.appendChild(toggle);
+			};
+		};
+
+		// Function to check if user has scrolled to the bottom
+		const isScrolledToBottom = () => {
+			return (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
+		};
+
+		// Function to load more books when scrolled to bottom
+		const loadMoreBooks = () => {
+			if (isScrolledToBottom()) {
+				const startIndex = currentPage * booksPerPage;
+				const endIndex = Math.min(startIndex + booksPerPage, books.length);
+				renderBooks(startIndex, endIndex);
+				currentPage++;
+
+				// Unobserve the last rendered book element if all books are rendered
+				if (currentPage >= Math.ceil(books.length / booksPerPage)) {
+					observer.unobserve(lastRenderedBook);
 				}
-			});
-			book.appendChild(toggle);
-		}
+			}
+		};
+
+		//Initial rendering of the first batch of books
+		renderBooks(0, booksPerPage);
+		currentPage++;
+
+		//Attach scroll event listener to window
+		window.addEventListener('scroll', loadMoreBooks);
+
+		// Intersection Observer to track the last rendered book element
+    		const observer = new IntersectionObserver((entries) => {
+      			entries.forEach((entry) => {
+        			if (entry.isIntersecting && currentPage < Math.ceil(books.length / booksPerPage)) {
+          				loadMoreBooks();
+        			}
+      			});
+    		}, { threshold: 0.5 }); //0.5 means when the container is 50% visible, it triggers observer
+
+		// Observe the last rendered book element
+		const lastRenderedBook = document.querySelector("#book:last-child");
+		observer.observe(lastRenderedBook);
 	</script>
 </html>
